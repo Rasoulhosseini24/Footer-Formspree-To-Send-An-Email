@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css.css">
+    <title>Footer</title>
+</head>
+
+<body>
+    <div class="containerr">
+        <div class="roww">
+            <div class="coll-12 footerr">
+
+                <div class="coll-3 sec-left">
+                    <div class="coll- img"><img src="circle-cropped.png"></div>
+                    <h2 class="coll-">Contact Us</h2>
+                    <p class="coll-">Your Address,123 Avenue,country</p>
+                    <form action="https://formspree.io/f/xzbwdryk" method="POST">
+                        <label>
+                            <input type="email" name="email" placeholder="Your E-mail" required>
+                        </label>
+                        <label>
+                            <textarea name="message" placeholder="Say Something..." required></textarea>
+                        </label>
+                        <input type="submit" value="send">
+                    </form>
+                    <div id="status"></div>
+                </div>
+
+                <div class="coll-9 sec-right">
+
+                    <div class="coll-4 left">
+                        <h2>rewards</h2>
+                        <p>join now</p>
+                        <p>learn more</p>
+                        <p>manage account</p>
+                    </div>
+
+                    <div class="coll-4 center">
+                        <h2>News & Info</h2>
+                        <p>press releases</p>
+                        <p>about our products</p>
+                        <p>product support</p>
+                        <p>product manuals</p>
+                        <p>product registration</p>
+                        <p>newslater sign up</p>
+                    </div>
+
+                    <div class="coll-4 right">
+                        <h2>support</h2>
+                        <p>faq</p>
+                        <p>help desk</p>
+                        <p>froums</p>
+                    </div>
+
+                </div>
+
+                <div class="coll-12 copyrightt">
+                    <p>© 2022 copyright.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        var form = document.querySelector("form");
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            var status = document.getElementById("status");
+            var data = new FormData(event.target);
+            fetch(event.target.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    status.classList.add('success');
+                    status.innerHTML = "Thanks for your submission!";
+                    form.reset()
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            status.innerHTML = data["errors"].map(error =>
+                                error["message"]).join(", ")
+                        } else {
+                            status.innerHTML =
+                                "Oops! There was a problem submitting your form";
+                        }
+                    })
+                }
+            }).catch(error => {
+                status.classList.add('error');
+                status.innerHTML =
+                    "Oops! There was a problem submitting your form"
+            });
+        }
+        form.addEventListener("submit", handleSubmit)
+    </script>
+
+
+</body>
+
+</html>
